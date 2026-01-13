@@ -1,5 +1,5 @@
 // frontend/src/components/ProfileModal.tsx
-import { useState, useEffect } from "react"; // <-- Add useEffect
+import { useState } from "react"; // <-- Add useEffect
 import toast from "react-hot-toast";
 import { updateProfile, deleteProfile } from "../api/user.api";
 import { useAuth } from "../context/AuthContext";

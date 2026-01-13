@@ -1,5 +1,5 @@
 // frontend/src/components/CreateTaskModal.tsx
-import { useState, useEffect } from "react"; // <-- Add useEffect
+import { useState } from "react"; // <-- Add useEffect
 import toast from "react-hot-toast";
 import { createTask } from "../api/task.api";
 import type { Task } from "../types/task";

@@ -1,5 +1,5 @@
 // frontend/src/components/AuthModal.tsx
-import { useState, useEffect } from "react"; // <-- Add useEffect
+import { useState } from "react"; // <-- Add useEffect
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import { loginApi, registerApi } from "../api/auth.api";
