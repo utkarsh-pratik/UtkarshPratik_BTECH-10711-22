@@ -1,26 +1,38 @@
+import defaultTheme from "tailwindcss/defaultTheme";
+
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class", // <-- Add this line
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      },
       colors: {
-        // A modern, professional blue for primary actions and highlights
         primary: {
-          DEFAULT: "#2563eb", // blue-600
-          hover: "#1d4ed8", // blue-700
+          50: "#eef2ff",
+          100: "#e0e7ff",
+          200: "#c7d2fe",
+          300: "#a5b4fc",
+          400: "#818cf8",
+          500: "#6366f1", // Main Primary Color (Indigo 500)
+          600: "#4f46e5", // Hover
+          700: "#4338ca",
+          800: "#3730a3",
+          900: "#312e81",
         },
-        // A refined set of neutral grays for text, backgrounds, and borders
         neutral: {
-          50: "#f8fafc",  // slate-50
-          100: "#f1f5f9", // slate-100
-          200: "#e2e8f0", // slate-200
-          300: "#cbd5e1", // slate-300
-          400: "#94a3b8", // slate-400
-          500: "#64748b", // slate-500
-          600: "#475569", // slate-600
-          700: "#334155", // slate-700
-          800: "#1e293b", // slate-800
-          900: "#0f172a", // slate-900
+          50: "#f8fafc",
+          100: "#f1f5f9", // Lightest background
+          200: "#e2e8f0", // Borders
+          300: "#cbd5e1",
+          400: "#94a3b8", // Muted text
+          500: "#64748b",
+          600: "#475569",
+          700: "#334155", // Body text
+          800: "#1e293b", // Headings
+          900: "#0f172a",
         },
       },
     },

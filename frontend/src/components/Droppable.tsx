@@ -13,7 +13,7 @@ export function Droppable({
 
   // Dynamically set the background color based on whether a card is hovering over it
   const style = {
-    backgroundColor: isOver ? "#e0e7ff" : undefined, // A light indigo color
+    backgroundColor: isOver ? "rgba(99, 102, 241, 0.1)" : undefined, // primary-500 with 10% opacity
   };
 
   return (

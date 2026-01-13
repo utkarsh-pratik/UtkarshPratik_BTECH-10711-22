@@ -1,25 +1,38 @@
 // frontend/src/components/ProfileModal.tsx
-import { useState } from "react"; // <-- Add useEffect
+import { useState, useEffect } from "react"; // <-- Make sure useEffect is imported
 import toast from "react-hot-toast";
 import { updateProfile, deleteProfile } from "../api/user.api";
 import { useAuth } from "../context/AuthContext";
-import { useAnimatedModal } from "../hooks/useAnimatedModal"; // <-- Import the hook
+import { useAnimatedModal } from "../hooks/useAnimatedModal";
 
 interface ProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
+  currentName: string; // <-- Add prop to the interface
 }
 
-export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
+export default function ProfileModal({ isOpen, onClose, currentName }: ProfileModalProps) {
   const { isRendered, handleClose } = useAnimatedModal(isOpen, onClose);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(currentName);
   const { logout } = useAuth();
+
+  // Add a useEffect to update the modal's name state if it's re-opened
+  useEffect(() => {
+    if (isOpen) {
+      setName(currentName);
+    }
+  }, [isOpen, currentName]);
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (name.trim().length < 3) {
+      toast.error("Name must be at least 3 characters long.");
+      return;
+    }
     try {
       await updateProfile(name);
       toast.success("Profile updated successfully!");
+      // You might want to force a re-fetch of the user data here
       onClose();
     } catch (error) {
       toast.error("Failed to update profile.");

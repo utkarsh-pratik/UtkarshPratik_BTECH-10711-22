@@ -1,25 +1,43 @@
+/* frontend/src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-  height: 100%;
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Apply a smooth, sans-serif font and default text color */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  @apply bg-neutral-50 text-neutral-800;
+  @apply text-neutral-700 antialiased;
+  background-color: #f1f5f9; /* bg-neutral-100 as a fallback */
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Add a base layer component for consistent card/modal styling */
-@layer components {
-  .card {
-    @apply bg-white rounded-lg shadow-sm;
-  }
+/* This pseudo-element creates the animated gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    -45deg,
+    #e0e7ff, /* indigo-100 */
+    #f1f5f9, /* slate-100 */
+    #ecfdf5, /* emerald-50 */
+    #f1f5f9  /* slate-100 */
+  );
+  background-size: 400% 400%;
+  animation: gradient-animation 30s ease infinite;
+  z-index: -1; /* Place it behind all content */
 }
 
-/* Add a global transition to all buttons for smooth hover effects */
+@layer components { .card { @apply bg-white/80 dark:bg-neutral-800/60 backdrop-blur-sm rounded-xl shadow-sm border border-white/50 dark:border-neutral-700/50; } }
+
 button {
-  @apply transition-colors duration-200;
+  @apply transition-all duration-200;
 }

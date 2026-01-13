@@ -16,7 +16,7 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition: transition || "transform 250ms ease", // Add a fallback transition
   };
 
   return (
@@ -25,16 +25,16 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       style={style}
       {...attributes}
       {...listeners}
-      className="card p-4 mb-2 cursor-move group relative border-l-4 border-transparent hover:border-primary transition-colors"
+      className="card p-4 cursor-grab group relative border-l-4 border-transparent hover:border-primary-500 hover:shadow-lg transition-all duration-300"
     >
       {/* Main Content */}
       <div className="flex flex-col gap-2">
-        <p className="font-semibold text-neutral-800">{task.title}</p>
+        <p className="font-semibold text-neutral-800 dark:text-neutral-100">{task.title}</p>
         {task.description && (
-          <p className="text-sm text-neutral-600">{task.description}</p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">{task.description}</p>
         )}
         {task.dueDate && (
-          <div className="flex items-center gap-2 text-sm text-neutral-500">
+          <div className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
             <Calendar size={14} />
             <span>{new Date(task.dueDate).toLocaleDateString()}</span>
           </div>
@@ -45,13 +45,13 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={(e) => { e.stopPropagation(); onEdit(task); }}
-          className="p-1.5 rounded-md text-neutral-500 hover:bg-neutral-100 hover:text-primary"
+          className="p-1.5 rounded-md text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:text-primary-500"
         >
           <Pencil size={16} />
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); onDelete(task._id); }}
-          className="p-1.5 rounded-md text-neutral-500 hover:bg-red-100 hover:text-red-500"
+          className="p-1.5 rounded-md text-neutral-500 dark:text-neutral-400 hover:bg-red-100 dark:hover:bg-red-500/20 hover:text-red-500"
         >
           <Trash2 size={16} />
         </button>

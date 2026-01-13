@@ -133,8 +133,8 @@ export default function KanbanBoard() {
     return (
       <div className="flex flex-col md:flex-row gap-4 p-4 md:p-6">
         {["Pending", "In Progress", "Completed"].map((title) => (
-          <div key={title} className="bg-neutral-100 p-4 rounded-lg w-full md:w-1/3">
-            <h2 className="font-bold mb-4 text-lg text-neutral-700">{title}</h2>
+          <div key={title} className="bg-neutral-100 dark:bg-neutral-800/50 p-4 rounded-xl w-full md:w-1/3">
+            <h2 className="font-bold mb-4 text-lg text-neutral-700 dark:text-neutral-200">{title}</h2>
             <div className="space-y-3">
               <SkeletonCard />
               <SkeletonCard />
