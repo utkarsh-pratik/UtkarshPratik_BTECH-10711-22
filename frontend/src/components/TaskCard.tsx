@@ -1,7 +1,9 @@
 // frontend/src/components/TaskCard.tsx
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Calendar, Pencil, Trash2 } from "lucide-react"; // <-- Import Calendar icon
+import { Calendar, Pencil, Trash2 } from "lucide-react";
+import { calculateTaskStatus } from "../utils/dueDateUtils";
+import type { TaskStatus } from "../utils/dueDateUtils"; // <-- Explicitly import the type
 import type { Task } from "../types/task";
 
 interface TaskCardProps {
@@ -16,7 +18,23 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition: transition || "transform 250ms ease", // Add a fallback transition
+    transition: transition || "transform 250ms ease",
+  };
+
+  // Calculate the task status
+  const taskStatus: TaskStatus = calculateTaskStatus(task.dueDate || "");
+
+  // Define badge styles based on the task status
+  const statusStyles: Record<TaskStatus, string> = {
+    "on-track": "bg-green-100 text-green-600",
+    "due-soon": "bg-yellow-100 text-yellow-600",
+    "overdue": "bg-red-100 text-red-600",
+  };
+
+  const statusText: Record<TaskStatus, string> = {
+    "on-track": "On Track",
+    "due-soon": "Due Soon",
+    "overdue": "Overdue",
   };
 
   return (
@@ -29,7 +47,17 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
     >
       {/* Main Content */}
       <div className="flex flex-col gap-2">
-        <p className="font-semibold text-neutral-800 dark:text-neutral-100">{task.title}</p>
+        <div className="flex justify-between items-center">
+          <p className="font-semibold text-neutral-800 dark:text-neutral-100">{task.title}</p>
+          {/* Status Badge */}
+          {task.dueDate && (
+            <span
+              className={`px-2 py-1 text-xs font-bold rounded-full ${statusStyles[taskStatus]}`}
+            >
+              {statusText[taskStatus]}
+            </span>
+          )}
+        </div>
         {task.description && (
           <p className="text-sm text-neutral-600 dark:text-neutral-400">{task.description}</p>
         )}
@@ -44,13 +72,19 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       {/* Hover Actions */}
       <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
-          onClick={(e) => { e.stopPropagation(); onEdit(task); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(task);
+          }}
           className="p-1.5 rounded-md text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:text-primary-500"
         >
           <Pencil size={16} />
         </button>
         <button
-          onClick={(e) => { e.stopPropagation(); onDelete(task._id); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(task._id);
+          }}
           className="p-1.5 rounded-md text-neutral-500 dark:text-neutral-400 hover:bg-red-100 dark:hover:bg-red-500/20 hover:text-red-500"
         >
           <Trash2 size={16} />

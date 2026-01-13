@@ -1,8 +1,8 @@
-# TaskFlow: Full-Stack Kanban Task Management System
+# TaskFlow: A Modern Full-Stack Task Management Application
 
 <div align="center">
 
-**A modern, full-stack, and feature-rich task management application built to demonstrate professional web development practices, from a secure backend API to a fluid, animated user interface.**
+**A feature-rich, SaaS-grade Kanban board application built to demonstrate professional, end-to-end web development. From a secure, validated backend API to a fluid, animated, and visually stunning user interface with light and dark modes.**
 
 </div>
 
@@ -23,25 +23,41 @@
 <div align="center">
 
 ![Project Demo](./assets/demo.gif)
-*(A short demo showcasing the application's features, including drag-and-drop.)*
+*(A short demo showcasing the application's features, including dark mode, animations, and drag-and-drop.)*
 
 </div>
 
 ## ✨ Features
 
-This project is a complete end-to-end product, featuring:
+This project goes beyond a simple CRUD application to deliver a complete, polished user experience.
 
--   **Modern Authentication:** Seamless, modal-based user **Sign Up** and **Login** flow with secure, JWT-based authentication.
--   **Full User Management:** Users can **update their profile** information and securely **delete their account**, which also removes all associated data.
--   **Complete Task CRUD:** Full Create, Read, Update, and Delete functionality for tasks, managed through an intuitive UI.
--   **Interactive Kanban Board:** A three-column board ("Pending," "In Progress," "Completed") with fluid **drag-and-drop** for both reordering tasks and changing their status.
--   **Professional UI/UX:**
-    -   **Fluid Animations:** Smooth, staggered animations on load and graceful transitions for all modals, built with `framer-motion`.
+-   **Modern Authentication & User Management:**
+    -   Seamless, modal-based **Sign Up** and **Login** flow.
+    -   Secure, JWT-based session management.
+    -   Users can **update their profile** information.
+    -   Users can securely **delete their account**, which also removes all associated data.
+    -   Strong password validation on the backend using Zod.
+
+-   **Intelligent Kanban Board:**
+    -   Full **CRUD** functionality for tasks (Create, Read, Update, Delete).
+    -   **Smart Due-Date Intelligence:** Tasks are automatically badged as `🔴 Overdue`, `🟠 Due Soon`, or `🟢 On Track`.
+    -   Fluid **drag-and-drop** for reordering tasks and changing their status.
+    -   Task counts in each column header for an at-a-glance overview.
+
+-   **Professional UI/UX & Visuals:**
+    -   **Light & Dark Mode:** A beautiful, persistent, and toggleable dark mode for user comfort.
+    -   **Fluid Animations:** Built with `framer-motion` for staggered loading animations, smooth modal transitions, and a delightful user experience.
+    -   **SaaS-Grade Landing Page:** A visually engaging homepage with a gradient hero, feature sections, and modern design patterns.
     -   **Toast Notifications:** Non-intrusive, real-time feedback for all user actions (e.g., "Task created," "Profile updated").
-    -   **Skeleton Loaders:** An elegant loading state that improves perceived performance while data is being fetched.
-    -   **Empty States:** Helpful placeholders for empty columns, enhancing the user experience.
--   **Robust Backend:** A secure RESTful API with input validation (using Zod), centralized error handling, and user-specific data protection.
--   **Fully Responsive Design:** A mobile-first approach ensures a seamless experience on any device, from desktop to smartphone.
+    -   **Glassmorphism & Animated Backgrounds:** A subtle, animated gradient background and frosted-glass effects create a sense of depth and polish.
+    -   **Skeleton Loaders & Empty States:** Ensures a smooth experience even with network latency or no data.
+    -   **Fully Responsive Design:** A seamless experience on any device, from desktop to mobile.
+
+-   **Robust & Secure Backend:**
+    -   A clean, RESTful API built with Node.js, Express, and TypeScript.
+    -   **Input Validation:** All incoming data is validated using Zod to ensure data integrity and security.
+    -   **Centralized Error Handling:** A global error middleware provides consistent and meaningful error responses.
+    -   **User-Specific Data:** API logic ensures users can only access and modify their own tasks.
 
 ## 🛠️ Tech Stack
 
@@ -98,7 +114,7 @@ npm install
 cp .env.example .env
 ```
 
-Next, open the newly created `.env` file and fill in your environment variables. The `MONGO_URI` must be your actual database connection string.
+Next, open the newly created `.env` file and fill in your environment variables.
 
 ```env
 PORT=5000
