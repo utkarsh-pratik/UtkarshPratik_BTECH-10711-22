@@ -22,7 +22,7 @@
 
 <div align="center">
 
-![Project Demo](./assets/demo.gif)
+![Project Demo](./assets/demo.png)
 *(A short demo showcasing the application's features, including dark mode, animations, and drag-and-drop.)*
 
 </div>
