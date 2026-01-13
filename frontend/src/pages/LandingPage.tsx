@@ -21,6 +21,13 @@ function BackgroundBlobs() {
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleScrollToFeatures = () => {
+    const featuresSection = document.getElementById("features");
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-neutral-50 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300">
       <BackgroundBlobs />
@@ -50,7 +57,11 @@ export default function LandingPage() {
               <Button onClick={() => setIsModalOpen(true)} className="px-8 py-4">
                 Start for Free
               </Button>
-              <Button variant="secondary" className="px-8 py-4">
+              <Button
+                variant="secondary"
+                className="px-8 py-4"
+                onClick={handleScrollToFeatures} // <-- Add this handler
+              >
                 Learn More
               </Button>
             </div>
@@ -58,7 +69,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-white dark:bg-neutral-800/50">
+        <section id="features" className="py-20 bg-white dark:bg-neutral-800/50">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h3 className="text-3xl font-bold text-neutral-800 dark:text-neutral-100">
