@@ -9,7 +9,6 @@ import { errorHandler } from "./middleware/error.middleware";
 const app = express();
 
 // --- CORS Configuration ---
-// Define the list of allowed origins (your frontend URLs)
 const allowedOrigins = [
   "https://utkarshtaskflow.vercel.app", // Your deployed frontend
   "http://localhost:5173",             // Your local development frontend
@@ -18,18 +17,20 @@ const allowedOrigins = [
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = "The CORS policy for this site does not allow access from the specified Origin.";
-      return callback(new Error(msg), false);
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
     }
-    return callback(null, true);
   },
-  credentials: true, // Allow cookies to be sent
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow all standard methods
-  allowedHeaders: "Content-Type,Authorization", // Allow necessary headers
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false, // <-- Ensure preflight is handled and not passed to other routes
+  optionsSuccessStatus: 204, // <-- Standard success status for OPTIONS requests
 };
 
+// Use the single, correctly configured CORS middleware for all requests.
+// This will automatically handle preflight OPTIONS requests.
 app.use(cors(corsOptions));
 // --- End of CORS Configuration ---
 
