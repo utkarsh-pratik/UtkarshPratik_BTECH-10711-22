@@ -21,11 +21,11 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}
-      className="bg-white p-3 mb-2 rounded shadow-sm cursor-move group relative">
-      <div className="font-semibold mb-1">{task.title}</div>
-      <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+      className="card p-3 mb-2 cursor-move group relative">
+      <div className="font-semibold mb-1 text-neutral-800">{task.title}</div>
+      <p className="text-sm text-neutral-600 mb-2">{task.description}</p>
       {task.dueDate && (
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-neutral-500">
           Due: {new Date(task.dueDate).toLocaleDateString()}
         </p>
       )}

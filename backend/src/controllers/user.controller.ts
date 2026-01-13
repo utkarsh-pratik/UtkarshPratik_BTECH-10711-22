@@ -31,6 +31,12 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
 // Delete current user's account
 export const deleteProfile = async (req: AuthRequest, res: Response) => {
   const userId = req.userId;
+
+  // Add this check to ensure userId is not undefined
+  if (!userId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
   // First, delete all tasks associated with the user
   await Task.deleteMany({ userId });
   // Then, delete the user

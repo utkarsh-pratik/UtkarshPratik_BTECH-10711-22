@@ -11,7 +11,7 @@ export default function LandingPage() {
         <h1 className="text-xl font-bold text-gray-800">Task Manager</h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-black text-white px-4 py-2 rounded-md font-semibold hover:bg-gray-800 transition"
+          className="bg-primary text-white px-4 py-2 rounded-md font-semibold hover:bg-primary-hover"
         >
           Login / Sign Up
         </button>

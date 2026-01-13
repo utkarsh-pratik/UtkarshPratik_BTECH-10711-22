@@ -25,7 +25,7 @@ export default function Dashboard() {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setCreateModalOpen(true)}
-            className="bg-black text-white px-4 py-2 rounded-md font-semibold hover:bg-gray-800 transition"
+            className="bg-primary text-white px-4 py-2 rounded-md font-semibold hover:bg-primary-hover"
           >
             + New Task
           </button>

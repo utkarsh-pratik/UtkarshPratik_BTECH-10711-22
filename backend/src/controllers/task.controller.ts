@@ -37,11 +37,20 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
     return;
   }
 
+  // Destructure only the allowed fields from the request body
+  const { title, description, status, dueDate } = req.body;
+  const updateData = { title, description, status, dueDate };
+
   const task = await Task.findOneAndUpdate(
     { _id: taskId, userId: userId },
-    req.body,
+    updateData, // <-- Use the sanitized updateData object
     { new: true }
   );
+
+  if (!task) {
+    return res.status(404).json({ message: "Task not found" });
+  }
+
   res.json(task);
 };
 

@@ -1,5 +1,6 @@
 // frontend/src/components/ProfileModal.tsx
 import { useState } from "react";
+import toast from "react-hot-toast"; // <-- Import toast
 import { updateProfile, deleteProfile } from "../api/user.api";
 import { useAuth } from "../context/AuthContext";
 
@@ -16,10 +17,10 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     e.preventDefault();
     try {
       await updateProfile(name);
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
       onClose();
     } catch (error) {
-      alert("Failed to update profile.");
+      toast.error("Failed to update profile.");
       console.error(error);
     }
   };
@@ -28,10 +29,10 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
     if (window.confirm("Are you sure you want to delete your account? This action is irreversible and will delete all your tasks.")) {
       try {
         await deleteProfile();
-        alert("Account deleted successfully.");
+        toast.success("Account deleted successfully.");
         logout(); // Log the user out after deleting their account
       } catch (error) {
-        alert("Failed to delete account.");
+        toast.error("Failed to delete account.");
         console.error(error);
       }
     }

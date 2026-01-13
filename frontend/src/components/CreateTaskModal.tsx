@@ -1,5 +1,6 @@
 // frontend/src/components/CreateTaskModal.tsx
 import { useState } from "react";
+import toast from "react-hot-toast"; // <-- Import toast
 import { createTask } from "../api/task.api";
 import type { Task } from "../types/task";
 
@@ -17,17 +18,16 @@ export default function CreateTaskModal({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title) {
-      setError("Title is required.");
+      toast.error("Title is required."); // <-- Use error toast
       return;
     }
-    setError("");
     try {
       const res = await createTask({ title, description, dueDate });
+      toast.success("Task created successfully!"); // <-- Add success toast
       onTaskCreated(res.data);
       onClose();
       // Reset form
@@ -35,7 +35,7 @@ export default function CreateTaskModal({
       setDescription("");
       setDueDate("");
     } catch (err) {
-      setError("Failed to create task. Please try again.");
+      toast.error("Failed to create task."); // <-- Use error toast
       console.error(err);
     }
   };
@@ -75,7 +75,6 @@ export default function CreateTaskModal({
               onChange={(e) => setDueDate(e.target.value)}
             />
           </div>
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <div className="flex justify-end gap-4">
             <button type="button" onClick={onClose} className="text-gray-600 font-semibold">
               Cancel
