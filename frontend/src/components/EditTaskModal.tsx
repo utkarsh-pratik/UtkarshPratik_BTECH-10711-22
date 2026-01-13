@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { updateTask } from "../api/task.api";
 import type { Task } from "../types/task";
+import { useAnimatedModal } from "../hooks/useAnimatedModal"; // <-- Import the hook
 
 interface EditTaskModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ export default function EditTaskModal({
   task,
   onTaskUpdated,
 }: EditTaskModalProps) {
+  const { isRendered, handleClose } = useAnimatedModal(isOpen, onClose);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -40,11 +42,21 @@ export default function EditTaskModal({
     }
   };
 
-  if (!isOpen || !task) return null;
+  if (!isRendered) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4" onClick={(e) => e.stopPropagation()}>
+    <div
+      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-200 ${
+        isOpen ? "opacity-100" : "opacity-0"
+      }`}
+      onClick={handleClose}
+    >
+      <div
+        className={`bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4 transition-transform duration-200 ${
+          isOpen ? "scale-100" : "scale-95"
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className="text-2xl font-bold mb-6">Edit Task</h2>
         <form onSubmit={handleSubmit}>
           {/* Form fields are the same as CreateTaskModal, but pre-filled */}

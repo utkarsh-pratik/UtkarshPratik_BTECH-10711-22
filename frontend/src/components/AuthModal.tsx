@@ -1,8 +1,9 @@
 // frontend/src/components/AuthModal.tsx
-import { useState } from "react";
-import toast from "react-hot-toast"; // <-- Import toast
+import { useState, useEffect } from "react"; // <-- Add useEffect
+import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import { loginApi, registerApi } from "../api/auth.api";
+import { useAnimatedModal } from "../hooks/useAnimatedModal"; // <-- Import the hook
 
 export default function AuthModal({
   isOpen,
@@ -11,11 +12,11 @@ export default function AuthModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const { isRendered, handleClose } = useAnimatedModal(isOpen, onClose);
   const [isLoginView, setIsLoginView] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // We no longer need the 'error' state, toast will handle it.
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,11 +42,21 @@ export default function AuthModal({
     }
   };
 
-  if (!isOpen) return null;
+  if (!isRendered) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4" onClick={(e) => e.stopPropagation()}>
+    <div
+      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-200 ${
+        isOpen ? "opacity-100" : "opacity-0"
+      }`}
+      onClick={handleClose}
+    >
+      <div
+        className={`bg-white p-8 rounded-lg shadow-xl w-full max-w-sm mx-4 transition-transform duration-200 ${
+          isOpen ? "scale-100" : "scale-95"
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className="text-2xl font-bold mb-6 text-center">
           {isLoginView ? "Welcome Back" : "Create Your Account"}
         </h2>
@@ -77,7 +88,6 @@ export default function AuthModal({
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <button type="submit" className="bg-primary text-white w-full p-2 rounded-md font-semibold hover:bg-primary-hover">
             {isLoginView ? "Login" : "Sign Up"}
           </button>

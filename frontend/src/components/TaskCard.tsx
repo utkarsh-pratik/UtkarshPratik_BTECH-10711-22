@@ -1,7 +1,7 @@
 // frontend/src/components/TaskCard.tsx
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Pencil, Trash2 } from "lucide-react";
+import { Calendar, Pencil, Trash2 } from "lucide-react"; // <-- Import Calendar icon
 import type { Task } from "../types/task";
 
 interface TaskCardProps {
@@ -20,20 +20,39 @@ export default function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}
-      className="card p-3 mb-2 cursor-move group relative">
-      <div className="font-semibold mb-1 text-neutral-800">{task.title}</div>
-      <p className="text-sm text-neutral-600 mb-2">{task.description}</p>
-      {task.dueDate && (
-        <p className="text-xs text-neutral-500">
-          Due: {new Date(task.dueDate).toLocaleDateString()}
-        </p>
-      )}
-      <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <button onClick={() => onEdit(task)} className="text-gray-500 hover:text-blue-500">
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="card p-4 mb-2 cursor-move group relative border-l-4 border-transparent hover:border-primary transition-colors"
+    >
+      {/* Main Content */}
+      <div className="flex flex-col gap-2">
+        <p className="font-semibold text-neutral-800">{task.title}</p>
+        {task.description && (
+          <p className="text-sm text-neutral-600">{task.description}</p>
+        )}
+        {task.dueDate && (
+          <div className="flex items-center gap-2 text-sm text-neutral-500">
+            <Calendar size={14} />
+            <span>{new Date(task.dueDate).toLocaleDateString()}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Hover Actions */}
+      <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <button
+          onClick={(e) => { e.stopPropagation(); onEdit(task); }}
+          className="p-1.5 rounded-md text-neutral-500 hover:bg-neutral-100 hover:text-primary"
+        >
           <Pencil size={16} />
         </button>
-        <button onClick={() => onDelete(task._id)} className="text-gray-500 hover:text-red-500">
+        <button
+          onClick={(e) => { e.stopPropagation(); onDelete(task._id); }}
+          className="p-1.5 rounded-md text-neutral-500 hover:bg-red-100 hover:text-red-500"
+        >
           <Trash2 size={16} />
         </button>
       </div>

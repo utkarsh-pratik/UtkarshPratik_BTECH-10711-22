@@ -33,17 +33,26 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
   const taskId = req.params.id;
 
   if (!userId || !taskId) {
-    res.status(400).json({ message: "Invalid request" });
-    return;
+    return res.status(400).json({ message: "Invalid request" });
   }
 
-  // Destructure only the allowed fields from the request body
+  // Create an update object and only add fields that are present in the request
+  const updateData: { [key: string]: any } = {};
   const { title, description, status, dueDate } = req.body;
-  const updateData = { title, description, status, dueDate };
+
+  if (title !== undefined) updateData.title = title;
+  if (description !== undefined) updateData.description = description;
+  if (status !== undefined) updateData.status = status;
+  if (dueDate !== undefined) updateData.dueDate = dueDate;
+
+  // Prevent sending an empty update object
+  if (Object.keys(updateData).length === 0) {
+    return res.status(400).json({ message: "No update data provided." });
+  }
 
   const task = await Task.findOneAndUpdate(
     { _id: taskId, userId: userId },
-    updateData, // <-- Use the sanitized updateData object
+    { $set: updateData }, // Use the $set operator for safer updates
     { new: true }
   );
 
